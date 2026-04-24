@@ -51,9 +51,6 @@ npm run lint    # eslint
 - ana
 - gaspi
 
-## Documentacion de CI
-Ver [docs/ci.md](docs/ci.md)
-
 ## Configuracion de Integracion Continua
 - Archivo de configuracion del workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - Workflow en GitHub Actions: `CI`
