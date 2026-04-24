@@ -12,6 +12,8 @@ Se utiliza GitHub Actions con un flujo llamado `CI`.
 6. Verificacion de estilo con `npm run lint`.
 7. Reporte de estado automatico (success/failure) en la pestaña Actions.
 
+Nota operativa: todos los comandos `npm` se ejecutan desde la raiz del repositorio `TIF-Ing-Soft-3`, no desde la carpeta padre.
+
 ## Evidencias (capturas pendientes)
 - [ ] Pantalla del workflow configurado en Actions.
 - [ ] Ejemplo de ejecucion exitosa.
@@ -20,9 +22,9 @@ Se utiliza GitHub Actions con un flujo llamado `CI`.
 ## Errores simulados y resolucion
 
 ### 1) Test fallido tras fusion
-- Simulacion: se cambia el retorno esperado en `tests/utils.test.js`.
-- Resultado: `npm test` falla en el pipeline.
-- Resolucion: se corrige el caso de prueba y se re-ejecuta.
+- Simulacion: se cambia el retorno esperado en `tests/utils.test.js` despues de fusionar una rama.
+- Resultado: `npm test` falla en el pipeline por una asercion rota.
+- Resolucion: se corrige el caso de prueba y se re-ejecuta el pipeline desde la raiz del repositorio.
 
 ### 2) Error de estilo detectado por linter
 - Simulacion: se agrega una variable sin usar en `src/server.js`.
@@ -30,9 +32,9 @@ Se utiliza GitHub Actions con un flujo llamado `CI`.
 - Resolucion: se elimina la variable y se corre de nuevo.
 
 ### 3) Problema de dependencias
-- Simulacion: version inexistente en `package.json`.
-- Resultado: `npm ci` falla en el pipeline.
-- Resolucion: se corrige la version y se vuelve a ejecutar.
+- Simulacion: se ejecuta `npm ci` y aparecen warnings por dependencias deprecadas (`inflight@1.0.6` y `glob`).
+- Resultado: la instalacion finaliza correctamente (`found 0 vulnerabilities`), pero CI deja evidencia de deuda tecnica en dependencias transitivas.
+- Resolucion: se actualizan dependencias directas (por ejemplo Jest), se revalida con `npm ci`, y se monitorean warnings en cada corrida para seguir reduciendo transitivas deprecadas.
 
 ## Recomendaciones y aprendizajes
 - Mantener tests locales antes de hacer push.

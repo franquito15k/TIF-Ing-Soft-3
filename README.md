@@ -7,13 +7,29 @@ Analizador de malware potenciado por IA para archivos y enlaces sospechosos. El 
 - Backend minimo con API de prueba.
 - CI configurado con GitHub Actions.
 
-## Setup local
+## Instrucciones para clonar y ejecutar el proyecto
+1. Clonar el repositorio:
+
 ```bash
-npm install
+git clone https://github.com/franquito15k/TIF-Ing-Soft-3.git
+cd TIF-Ing-Soft-3
+```
+
+2. Instalar dependencias:
+
+```bash
+npm ci
+```
+
+3. Levantar el servidor local:
+
+```bash
 npm run start
 ```
 
-Abrir http://localhost:3000
+4. Abrir en el navegador:
+
+http://localhost:3000
 
 ## Scripts
 ```bash
@@ -37,3 +53,18 @@ npm run lint    # eslint
 
 ## Documentacion de CI
 Ver [docs/ci.md](docs/ci.md)
+
+## Configuracion de Integracion Continua
+- Archivo de configuracion del workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml)
+- Workflow en GitHub Actions: `CI`
+
+### Como funciona la integracion continua en este proyecto
+En cada `push` a las ramas de trabajo y en cada `pull request` hacia `main`, GitHub Actions ejecuta automaticamente el pipeline.
+
+El flujo corre estos pasos:
+1. `npm ci` para instalar dependencias de manera reproducible.
+2. `npm run build` para validar build/sintaxis basica.
+3. `npm test` para ejecutar pruebas unitarias (minimo 5).
+4. `npm run lint` para verificar estandares de estilo.
+
+Si alguno falla, el pipeline queda en estado `failure`; si todos pasan, queda en `success`.
